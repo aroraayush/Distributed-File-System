@@ -1,0 +1,126 @@
+syntax = "proto3";
+option java_package = "edu.usfca.cs.chat";
+
+message ChatMessagesWrapper {
+    oneof msg {
+        FileInfo fInfo = 1;
+        Heartbeat hBeat = 2;
+        StorageNodeMetaData sMeta= 3;
+        //NodeElectionBeat elecBeat = 4;
+        ReplicaStatus repStatus = 4;
+        DirectoryMsg dir = 5;
+        FileData fileBuf = 6;
+        ReaddirRequest  readdir_req  = 7;
+        ReaddirResponse readdir_resp = 8;
+        GetattrRequest  getattr_req  = 9;
+        GetattrResponse getattr_resp = 10;
+        OpenRequest     open_req     = 11;
+        OpenResponse    open_resp    = 12;
+        ReadRequest     read_req     = 13;
+        ReadResponse    read_resp    = 14;
+    }
+}
+
+message FileInfo {
+    double size = 1;
+    string fileName = 2;
+}
+
+message DirectoryMsg {
+    string name = 1;
+}
+message Heartbeat {
+    double spaceAvailable = 1; // in MB
+    int32 requestsProcessed = 2;
+    int64 epochTime = 3;
+    int32 nodeNumber = 4;
+    repeated string replicaInfo = 5;
+}
+
+message StorageNodeMetaData {
+    repeated string hostPort = 1;
+    RequestType requestType = 2; // true if Write to SN, false if Read from SN
+    FileInfo file = 3;
+
+    enum RequestType{
+        READ = 0;
+        WRITE = 1;
+        REPLICA = 2;
+    }
+
+}
+
+message FileData {
+    string fileName = 1;
+    int32 fsize = 2;
+    bool source = 3; // true if client, false if SN
+    string sourceHost = 4;
+    bytes fileBuffer = 5;
+}
+
+// Posix
+message ReaddirRequest {
+    string path = 1;
+}
+
+message ReaddirResponse {
+    int32 status = 1;
+    repeated string contents = 2;
+}
+
+message GetattrRequest {
+    string path = 1;
+}
+
+message GetattrResponse {
+    int32 status = 1;
+    int32 mode = 2;
+    int64 size = 3;
+}
+
+message OpenRequest {
+    string path = 1;
+}
+
+message OpenResponse {
+    int32 status = 1;
+}
+
+message ReadRequest {
+    string path = 1;
+    int64 size = 2;
+    int64 offset = 3;
+}
+
+message ReadResponse {
+    int32 status = 1;
+    bytes contents = 2;
+}
+
+message ReplicaStatus{
+    string filename = 1;
+    string sourceHost = 2;
+}
+
+// Raft
+//message NodeElectionBeat {
+//    int32 vote = 1;
+//    int32 NodeState = 2;
+//    int32 term = 3;
+//    BeatType type = 4;
+//
+//    enum BeatType{
+//        LEADER_REQUEST = 0;
+//        LEADER_APPROVED = 1;
+//        LEADER_SELF = 2;
+//        LEADER_REJECTED = 3;
+//        REQUEST_REJECTED = 4;
+//    }
+//
+//}
+
+//enum NodeState{
+//    FOLLOWER = 0;
+//    CANDIDATE = 1;
+//    LEADER = 2;
+//}
