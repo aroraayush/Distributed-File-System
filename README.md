@@ -1,4 +1,5 @@
 Design Document: [here](https://ayusharora.me/blogs/distributed-systems/storage/POSIX_Design_Retrospective_Doc.pdf)
+
 Blog (Detailed Descriptiom + Design Decesions): [here](https://ayusharora.me/blogs/distributed-systems/storage/building-distributed-file-system.html)
 
 ---
