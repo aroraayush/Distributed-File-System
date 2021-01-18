@@ -1,17 +1,15 @@
-- Our latest code is available in `replica2` branch, last pushed before 11:59p on 10/11/2020. 
-- The design + retrospective document was pushed on 10/22/2020. 
----
-
-# Project 1: POSIX DFS With Probabilistic Routing
+Detailed Descriptiom + Design Decesions: [here](https://ayusharora.me/blogs/distributed-systems/storage/building-distributed-file-system.html)
 
 ---
+
+# POSIX DFS With Probabilistic Routing
 #### Starting with the client
 ```
-git checkout replica2
+git checkout master
 java -jar client.jar <Controller_Host> <Controller_Port>
 ```
 ```
-git checkout replica2
+git checkout master
 java -jar client.jar 10.10.12.17 37500
 ```
 #### Using the client
